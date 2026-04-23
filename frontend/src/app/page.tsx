@@ -4,27 +4,6 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-function useTyper(lines: string[], speed = 30) {
-  const [text, setText] = useState('');
-  const [li, setLi] = useState(0);
-  const [ci, setCi] = useState(0);
-  const [ok, setOk] = useState(false);
-  useEffect(() => { setOk(true); }, []);
-  useEffect(() => {
-    if (!ok || li >= lines.length) return;
-    const line = lines[li];
-    if (ci <= line.length) {
-      const t = setTimeout(() => {
-        setText(lines.slice(0, li).join('\n') + (li > 0 ? '\n' : '') + line.slice(0, ci));
-        setCi(c => c + 1);
-      }, speed);
-      return () => clearTimeout(t);
-    }
-    const t = setTimeout(() => { setLi(i => i + 1); setCi(0); }, 350);
-    return () => clearTimeout(t);
-  }, [ci, li, lines, speed, ok]);
-  return ok ? text : '';
-}
 
 const WordByWord = ({ text }: { text: string }) => {
   const words = text.split(" ");
@@ -61,16 +40,7 @@ const WordByWord = ({ text }: { text: string }) => {
 const fade = (d = 0) => ({ initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: d, ease: [0.22, 1, 0.36, 1] } });
 
 export default function LandingPage() {
-  const typed = useTyper([
-    '> initializing solmap_engine v0.1.0...',
-    '> connecting to solana mainnet...',
-    '> loading world_state [3 factions | 7 zones]',
-    '> chaos_level: 0 → monitoring transactions...',
-    '> trade detected: +50 power → Crimson Order',
-    '> chaos_check() → roll: 7 → ✨ AIRDROP triggered!',
-    '> ⚔️  WAR EVENT: Azure Legion attacks Emerald Pact',
-    '> reality is shifting. 🌀',
-  ]);
+
 
   const steps = [
     { n: 'PHASE 01', t: 'Connect Wallet', d: 'Link your Phantom or Solflare wallet to enter the map. No complex onboarding.' },
@@ -165,26 +135,7 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Professional Terminal */}
-          <motion.div className="lp-terminal-pro" {...fade(0.3)}>
-            <div className="pro-header">
-              <div className="dots">
-                <div style={{ background: '#ef4444' }} />
-                <div style={{ background: '#f59e0b' }} />
-                <div style={{ background: '#10b981' }} />
-              </div>
-              <div className="title">engine.rs</div>
-              <div className="right-badge">Rust</div>
-            </div>
-            <div className="pro-body">
-              <div className="line-numbers">
-                {Array.from({length: 8}).map((_, i) => <span key={i}>{i+1}</span>)}
-              </div>
-              <div className="code-content">
-                {typed}<span className="lp-cursor" />
-              </div>
-            </div>
-          </motion.div>
+
         </section>
 
         {/* HOW IT WORKS (Vertical Timeline) */}
