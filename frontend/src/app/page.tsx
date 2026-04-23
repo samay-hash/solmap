@@ -146,12 +146,13 @@ export default function LandingPage() {
               <span>Solmap · EST. 2026</span>
             </div>
 
-            <div className="glitch-wrapper">
-              <h1 className="glitch-text" data-text="Every Transaction Changes Reality.">
-                Every<br />
-                Transaction<br />
-                <span className="accent">Changes Reality.</span>
-              </h1>
+            <div className="elegant-text-wrapper">
+              <span className="elegant-line">EVERY</span>
+              <span className="elegant-line bold">TRANSACTION</span>
+              <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                <span style={{ height: '2px', background: '#fff', flex: 1, maxWidth: '60px' }}></span>
+                CHANGES REALITY.
+              </span>
             </div>
 
             <div className="lp-hero-desc">
