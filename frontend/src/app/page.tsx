@@ -123,7 +123,7 @@ export default function LandingPage() {
 
       <div className="lp-content-layer" style={{ position: 'relative', zIndex: 5 }}>
         {/* NAV */}
-        <nav className="lp-nav" style={{ background: 'rgba(7,8,15,0.4)', backdropFilter: 'blur(16px)' }}>
+        <nav className="lp-nav" style={{ background: 'transparent', backdropFilter: 'none', borderBottom: 'none' }}>
           <Link href="/" className="lp-nav-logo">
             <span style={{ color: '#22d3ee' }}>🌀</span>
             <span>Solmap</span>
@@ -140,34 +140,35 @@ export default function LandingPage() {
         </nav>
 
         {/* HERO */}
-        <section className="lp-hero" style={{ padding: '0 0 80px 64px' }}>
-          <motion.div className="lp-hero-content" {...fade(0)}>
-            <div className="lp-tag">
+        <section className="lp-hero" style={{ padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+          <motion.div className="lp-hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '40px', maxWidth: '800px', margin: '0 auto' }} {...fade(0)}>
+            <div className="lp-tag" style={{ justifyContent: 'center', marginBottom: '24px' }}>
               <div className="line" />
               <div className="dot" />
               <span>Solmap · EST. 2026</span>
+              <div className="dot" />
+              <div className="line" />
             </div>
 
-            <div className="elegant-text-wrapper" style={{ marginTop: '40px', marginBottom: '40px' }}>
+            <div className="elegant-text-wrapper" style={{ marginTop: '20px', marginBottom: '32px' }}>
               <span className="elegant-line" style={{ letterSpacing: '0.05em' }}>EVERY</span>
               <span className="elegant-line bold" style={{ fontSize: 'clamp(4rem, 8vw, 7.5rem)', letterSpacing: '-0.02em', marginTop: '-10px' }}>TRANSACTION</span>
-              <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', gap: '24px', marginTop: '10px' }}>
-                <span style={{ height: '1px', background: 'rgba(255,255,255,0.5)', flex: 1, maxWidth: '80px' }}></span>
+              <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px', marginTop: '10px' }}>
+                <span style={{ height: '1px', background: 'rgba(255,255,255,0.5)', width: '60px' }}></span>
                 <span style={{ fontStyle: 'italic', color: '#e2e8f0' }}>CHANGES</span> REALITY.
+                <span style={{ height: '1px', background: 'rgba(255,255,255,0.5)', width: '60px' }}></span>
               </span>
             </div>
 
-            <div className="lp-hero-desc">
+            <div className="lp-hero-desc" style={{ textAlign: 'center', margin: '0 auto 40px auto' }}>
               <WordByWord text="A living blockchain map where factions battle for territory, a chaos engine triggers unpredictable events, and AI agents play alongside you — all on-chain, all on Solana." />
             </div>
 
-            <div className="lp-hero-btns">
+            <div className="lp-hero-btns" style={{ justifyContent: 'center' }}>
               <Link href="/world" className="lp-cta-btn">Explore Map →</Link>
               <a href="#how-it-works" className="lp-watch">▶ View Mechanics</a>
             </div>
           </motion.div>
-
-
         </section>
 
         {/* HOW IT WORKS (Vertical Timeline) */}
