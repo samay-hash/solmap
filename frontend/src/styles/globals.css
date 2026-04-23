@@ -449,6 +449,13 @@ code, .mono {
 .lp-watch { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
 .lp-watch:hover { color: var(--text-primary); }
 
+.lp-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.lp-event-rows { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.lp-event-row { display: flex; align-items: center; gap: 16px; padding: 16px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.1); background: rgba(8,10,20,0.4); }
+.lp-event-row .info h5 { margin-bottom: 2px; color: #fff; }
+.lp-event-row .info p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+.lp-event-row .badge { margin-left: auto; font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; padding: 4px 8px; border-radius: 4px; }
+
 /* Section shared */
 .lp-section { padding: 120px 64px; position: relative; }
 .lp-section-bg { position: absolute; inset: 0; z-index: 0; }
@@ -545,6 +552,14 @@ code, .mono {
   justify-content: center;
   perspective: 1000px;
 }
+.arch-radial-container::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 49.8%, rgba(34,211,238,0.2) 49.8%, rgba(34,211,238,0.2) 50.2%, transparent 50.2%),
+              linear-gradient(to bottom, transparent 49.8%, rgba(168,85,247,0.2) 49.8%, rgba(168,85,247,0.2) 50.2%, transparent 50.2%);
+  opacity: 0; transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1; pointer-events: none;
+}
+.arch-radial-container.is-spread::before { opacity: 1; }
 
 .arch-card-spread {
   position: absolute;
@@ -583,12 +598,13 @@ code, .mono {
   letter-spacing: -0.03em;
 }
 .elegant-line {
-  font-size: clamp(3.5rem, 6.5vw, 6rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 400;
   display: block;
 }
 .elegant-line.bold {
   font-weight: 700;
+  font-size: clamp(3rem, 6vw, 5.5rem) !important;
 }
 .elegant-serif {
   font-family: 'Playfair Display', serif;

@@ -246,9 +246,9 @@ export default function LandingPage() {
             <span className="lp-section-tag" style={{ color: '#22d3ee' }}>Tech Stack</span>
             <h2>Full-Stack Architecture</h2>
             <p className="lp-section-sub" style={{ margin: '0 auto 0' }}>
-              Hover to reveal the core engine modules.
+              Click to reveal the core engine modules.
             </p>
-            <div className="arch-radial-container" onClick={() => setArchSpread(!archSpread)} style={{ cursor: 'pointer' }}>
+            <div className={`arch-radial-container ${archSpread ? 'is-spread' : ''}`} onClick={() => setArchSpread(!archSpread)} style={{ cursor: 'pointer' }}>
               {arch.map((a, i) => (
                 <div key={a.layer} className={`arch-card-spread ${archSpread ? `arch-spread-${i}` : ''}`} style={{ zIndex: 4 - i }}>
                   <div className="lp-arch-dot" style={{ background: a.c, boxShadow: `0 0 12px ${a.c}60` }} />
