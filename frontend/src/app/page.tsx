@@ -4,6 +4,27 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+function useTyper(lines: string[], speed = 30) {
+  const [text, setText] = useState('');
+  const [li, setLi] = useState(0);
+  const [ci, setCi] = useState(0);
+  const [ok, setOk] = useState(false);
+  useEffect(() => { setOk(true); }, []);
+  useEffect(() => {
+    if (!ok || li >= lines.length) return;
+    const line = lines[li];
+    if (ci <= line.length) {
+      const t = setTimeout(() => {
+        setText(lines.slice(0, li).join('\n') + (li > 0 ? '\n' : '') + line.slice(0, ci));
+        setCi(c => c + 1);
+      }, speed);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => { setLi(i => i + 1); setCi(0); }, 350);
+    return () => clearTimeout(t);
+  }, [ci, li, lines, speed, ok]);
+  return ok ? text : '';
+}
 
 const WordByWord = ({ text }: { text: string }) => {
   const words = text.split(" ");
@@ -40,6 +61,17 @@ const WordByWord = ({ text }: { text: string }) => {
 const fade = (d = 0) => ({ initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: d, ease: [0.22, 1, 0.36, 1] } });
 
 export default function LandingPage() {
+  const [archSpread, setArchSpread] = useState(false);
+  const typed = useTyper([
+    '> initializing solmap_engine v0.1.0...',
+    '> connecting to solana mainnet...',
+    '> loading world_state [3 factions | 7 zones]',
+    '> chaos_level: 0 → monitoring transactions...',
+    '> trade detected: +50 power → Crimson Order',
+    '> chaos_check() → roll: 7 → ✨ AIRDROP triggered!',
+    '> ⚔️  WAR EVENT: Azure Legion attacks Emerald Pact',
+    '> reality is shifting. 🌀',
+  ]);
 
 
   const steps = [
@@ -116,12 +148,12 @@ export default function LandingPage() {
               <span>Solmap · EST. 2026</span>
             </div>
 
-            <div className="elegant-text-wrapper">
-              <span className="elegant-line">EVERY</span>
-              <span className="elegant-line bold">TRANSACTION</span>
-              <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                <span style={{ height: '2px', background: '#fff', flex: 1, maxWidth: '60px' }}></span>
-                CHANGES REALITY.
+            <div className="elegant-text-wrapper" style={{ marginTop: '40px', marginBottom: '40px' }}>
+              <span className="elegant-line" style={{ letterSpacing: '0.05em' }}>EVERY</span>
+              <span className="elegant-line bold" style={{ fontSize: 'clamp(4rem, 8vw, 7.5rem)', letterSpacing: '-0.02em', marginTop: '-10px' }}>TRANSACTION</span>
+              <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', gap: '24px', marginTop: '10px' }}>
+                <span style={{ height: '1px', background: 'rgba(255,255,255,0.5)', flex: 1, maxWidth: '80px' }}></span>
+                <span style={{ fontStyle: 'italic', color: '#e2e8f0' }}>CHANGES</span> REALITY.
               </span>
             </div>
 
@@ -165,18 +197,25 @@ export default function LandingPage() {
         <section className="lp-section" id="chaos-engine">
           <div className="lp-section-inner">
             <div className="lp-split">
-              <div className="lp-code-block" style={{ background: 'rgba(8,10,20,0.7)', backdropFilter: 'blur(10px)' }}>
-                <div style={{ color: 'var(--text-muted)', marginBottom: 8 }}>{'// on-chain chaos engine (Rust/Anchor)'}</div>
-                <div><span style={{ color: '#c084fc' }}>let</span> seed = clock.timestamp <span style={{ color: '#94a3b8' }}>^</span> total_tx <span style={{ color: '#94a3b8' }}>^</span> chaos_level;</div>
-                <div><span style={{ color: '#c084fc' }}>let</span> roll = seed <span style={{ color: '#94a3b8' }}>%</span> <span style={{ color: '#22d3ee' }}>100</span>;</div>
-                <div style={{ marginTop: 8 }}><span style={{ color: '#c084fc' }}>if</span> chaos {'>'} <span style={{ color: '#22d3ee' }}>80</span> && roll {'<'} <span style={{ color: '#22d3ee' }}>25</span> {'{'}</div>
-                <div style={{ paddingLeft: 20, color: '#ef4444' }}>→ WAR_EVENT</div>
-                <div>{'}'} <span style={{ color: '#c084fc' }}>else if</span> chaos {'>'} <span style={{ color: '#22d3ee' }}>50</span> && roll {'<'} <span style={{ color: '#22d3ee' }}>12</span> {'{'}</div>
-                <div style={{ paddingLeft: 20, color: '#ec4899' }}>→ BETRAYAL</div>
-                <div>{'}'} <span style={{ color: '#c084fc' }}>else if</span> roll {'<'} <span style={{ color: '#22d3ee' }}>8</span> {'{'}</div>
-                <div style={{ paddingLeft: 20, color: '#10b981' }}>→ AIRDROP</div>
-                <div>{'}'}</div>
-              </div>
+              <motion.div className="lp-terminal-pro" style={{ position: 'relative', right: 'auto', bottom: 'auto', width: '100%', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }} {...fade(0.3)}>
+                <div className="pro-header">
+                  <div className="dots">
+                    <div style={{ background: '#ef4444' }} />
+                    <div style={{ background: '#f59e0b' }} />
+                    <div style={{ background: '#10b981' }} />
+                  </div>
+                  <div className="title">engine.rs</div>
+                  <div className="right-badge">Rust</div>
+                </div>
+                <div className="pro-body" style={{ minHeight: '320px' }}>
+                  <div className="line-numbers">
+                    {Array.from({length: 8}).map((_, i) => <span key={i}>{i+1}</span>)}
+                  </div>
+                  <div className="code-content">
+                    {typed}<span className="lp-cursor" />
+                  </div>
+                </div>
+              </motion.div>
               <div>
                 <span className="lp-section-tag" style={{ color: '#ef4444' }}>The Game Changer</span>
                 <h2>Chaos Engine</h2>
@@ -209,10 +248,9 @@ export default function LandingPage() {
             <p className="lp-section-sub" style={{ margin: '0 auto 0' }}>
               Hover to reveal the core engine modules.
             </p>
-            <div className="arch-radial-container">
-              <div className="arch-center-orb">CORE</div>
+            <div className="arch-radial-container" onClick={() => setArchSpread(!archSpread)} style={{ cursor: 'pointer' }}>
               {arch.map((a, i) => (
-                <div key={a.layer} className={`arch-card-spread arch-spread-${i}`}>
+                <div key={a.layer} className={`arch-card-spread ${archSpread ? `arch-spread-${i}` : ''}`} style={{ zIndex: 4 - i }}>
                   <div className="lp-arch-dot" style={{ background: a.c, boxShadow: `0 0 12px ${a.c}60` }} />
                   <div className="layer">{a.layer}</div>
                   <h4>{a.tech}</h4>
