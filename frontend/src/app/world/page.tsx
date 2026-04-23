@@ -2,7 +2,12 @@
 
 import { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import dynamic from 'next/dynamic';
+
+const WalletMultiButton = dynamic(
+  async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+  { ssr: false }
+);
 import { WorldMap } from '@/components/WorldMap';
 import { ChaosBar } from '@/components/ChaosBar';
 import { EventFeed } from '@/components/EventFeed';
