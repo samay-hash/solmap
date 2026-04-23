@@ -2,13 +2,18 @@
 
 import { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import dynamic from 'next/dynamic';
 import { WorldMap } from '@/components/WorldMap';
 import { ChaosBar } from '@/components/ChaosBar';
 import { EventFeed } from '@/components/EventFeed';
 import { FactionPanel } from '@/components/FactionPanel';
 import { useWorldState } from '@/hooks/useWorldState';
 import Link from 'next/link';
+
+const WalletMultiButtonDynamic = dynamic(
+  async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+  { ssr: false }
+);
 
 export default function WorldPage() {
   const { connected } = useWallet();
@@ -82,7 +87,7 @@ export default function WorldPage() {
             {isDemoMode ? '🟢 Demo Mode ON' : '⚪ Demo Mode'}
           </button>
 
-          <WalletMultiButton />
+          <WalletMultiButtonDynamic />
         </div>
       </header>
 
