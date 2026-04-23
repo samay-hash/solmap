@@ -146,11 +146,13 @@ export default function LandingPage() {
               <span>Solmap · EST. 2026</span>
             </div>
 
-            <h1>
-              Every<br />
-              Transaction<br />
-              <span className="accent">Changes Reality.</span>
-            </h1>
+            <div className="glitch-wrapper">
+              <h1 className="glitch-text" data-text="Every Transaction Changes Reality.">
+                Every<br />
+                Transaction<br />
+                <span className="accent">Changes Reality.</span>
+              </h1>
+            </div>
 
             <div className="lp-hero-desc">
               <WordByWord text="A living blockchain map where factions battle for territory, a chaos engine triggers unpredictable events, and AI agents play alongside you — all on-chain, all on Solana." />
@@ -253,11 +255,12 @@ export default function LandingPage() {
             <span className="lp-section-tag" style={{ color: '#22d3ee' }}>Tech Stack</span>
             <h2>Full-Stack Architecture</h2>
             <p className="lp-section-sub" style={{ margin: '0 auto 0' }}>
-              On-chain programs, real-time backend, and a visual frontend — all integrated.
+              Hover to reveal the core engine modules.
             </p>
-            <div className="lp-arch-grid">
-              {arch.map(a => (
-                <div key={a.layer} className="lp-arch-card" style={{ textAlign: 'left', background: 'rgba(13,15,26,0.6)', backdropFilter: 'blur(10px)' }}>
+            <div className="arch-radial-container">
+              <div className="arch-center-orb">CORE</div>
+              {arch.map((a, i) => (
+                <div key={a.layer} className={`arch-card-spread arch-spread-${i}`}>
                   <div className="lp-arch-dot" style={{ background: a.c, boxShadow: `0 0 12px ${a.c}60` }} />
                   <div className="layer">{a.layer}</div>
                   <h4>{a.tech}</h4>
