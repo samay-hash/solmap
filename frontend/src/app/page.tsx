@@ -152,7 +152,7 @@ export default function LandingPage() {
 
             <div className="elegant-text-wrapper" style={{ marginTop: '20px', marginBottom: '32px' }}>
               <span className="elegant-line" style={{ letterSpacing: '0.2em' }}>EVERY</span>
-              <span className="elegant-line bold" style={{ fontSize: 'clamp(3.5rem, 7vw, 6.5rem)', marginTop: '-5px' }}>TRANSACTION</span>
+              <span className="elegant-line bold" style={{ fontSize: 'clamp(4rem, 8vw, 7.5rem)', marginTop: '-5px' }}>TRANSACTION</span>
               <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px', marginTop: '15px' }}>
                 <span style={{ height: '1px', background: 'rgba(255,255,255,0.4)', width: '80px' }}></span>
                 <span style={{ fontStyle: 'italic', color: '#e2e8f0', fontWeight: 400 }}>CHANGES</span> REALITY.
@@ -247,11 +247,11 @@ export default function LandingPage() {
             <span className="lp-section-tag" style={{ color: '#22d3ee' }}>Tech Stack</span>
             <h2>Full-Stack Architecture</h2>
             <p className="lp-section-sub" style={{ margin: '0 auto 0' }}>
-              Click to reveal the core engine modules.
+              Hover to reveal the core engine modules.
             </p>
-            <div className={`arch-radial-container ${archSpread ? 'is-spread' : ''}`} onClick={() => setArchSpread(!archSpread)} style={{ cursor: 'pointer' }}>
+            <div className="arch-radial-container">
               {arch.map((a, i) => (
-                <div key={a.layer} className={`arch-card-spread ${archSpread ? `arch-spread-${i}` : ''}`} style={{ zIndex: 4 - i }}>
+                <div key={a.layer} className={`arch-card-spread arch-spread-${i}`} style={{ zIndex: 4 - i }}>
                   <div className="lp-arch-dot" style={{ background: a.c, boxShadow: `0 0 12px ${a.c}60` }} />
                   <div className="layer">{a.layer}</div>
                   <h4>{a.tech}</h4>
@@ -294,7 +294,7 @@ export default function LandingPage() {
 
         {/* FOOTER */}
         <footer className="lp-footer" style={{ background: 'rgba(7,8,15,0.4)', backdropFilter: 'blur(10px)' }}>
-          <span>🌀 Solmap · Built on <span className="sol">Solana</span></span>
+          <span>Solmap · Built on <span className="sol">Solana</span></span>
           <span>Solana Hackathon 2026</span>
         </footer>
       </div>
