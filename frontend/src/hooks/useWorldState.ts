@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { Transaction, SystemProgram, PublicKey } from '@solana/web3.js';
 import {
   WorldState, ChaosEvent, Faction, Territory,
   FACTIONS, TERRITORIES, ChaosEventType
@@ -55,7 +57,13 @@ const FACTION_NAMES_MAP: Record<number, string> = {
   0: 'Unclaimed', 1: 'Crimson Order', 2: 'Azure Legion', 3: 'Emerald Pact',
 };
 
+// Dummy Treasury for the Hackathon integration
+const TREASURY_PUBKEY = new PublicKey("11111111111111111111111111111111");
+
 export function useWorldState() {
+  const { connection } = useConnection();
+  const { publicKey, sendTransaction } = useWallet();
+
   const [world, setWorld] = useState<WorldState>({
     chaosLevel: 12,
     totalTransactions: 0,
@@ -159,8 +167,27 @@ export function useWorldState() {
   }, [triggerShake]);
 
   // Trade action
-  const executeTrade = useCallback((factionId: number, amount: number) => {
-    setWorld(prev => {
+  const executeTrade = useCallback(async (factionId: number, amount: number) => {
+    if (!publicKey) {
+      alert("Please connect your wallet first to execute a trade!");
+      return;
+    }
+
+    try {
+      // Create a dummy transaction to make it "on-chain"
+      const tx = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: publicKey,
+          toPubkey: TREASURY_PUBKEY,
+          lamports: 1000, // Smallest amount
+        })
+      );
+      
+      const signature = await sendTransaction(tx, connection);
+      // Optional: await connection.confirmTransaction(signature, 'processed');
+      console.log(`On-chain transaction sent: ${signature}`);
+
+      setWorld(prev => {
       const newChaos = Math.min(prev.chaosLevel + CHAOS_PER_TRADE, MAX_CHAOS_LEVEL);
       const newTx = prev.totalTransactions + 1;
       const newFactions = prev.factions.map(f =>
@@ -212,11 +239,32 @@ export function useWorldState() {
 
       return newState;
     });
-  }, [chaosCheck]);
+    } catch (err) {
+      console.error(err);
+      alert("Transaction failed or rejected by user.");
+    }
+  }, [chaosCheck, publicKey, connection, sendTransaction]);
 
   // Attack territory
-  const attackTerritory = useCallback((factionId: number, zoneId: number) => {
-    setWorld(prev => {
+  const attackTerritory = useCallback(async (factionId: number, zoneId: number) => {
+    if (!publicKey) {
+      alert("Please connect your wallet first to attack!");
+      return;
+    }
+
+    try {
+      const tx = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: publicKey,
+          toPubkey: TREASURY_PUBKEY,
+          lamports: 1000,
+        })
+      );
+      
+      const signature = await sendTransaction(tx, connection);
+      console.log(`On-chain attack transaction sent: ${signature}`);
+
+      setWorld(prev => {
       const territory = prev.territories.find(t => t.zoneId === zoneId);
       if (!territory) return prev;
 
@@ -287,11 +335,32 @@ export function useWorldState() {
 
       return newState;
     });
-  }, [chaosCheck, triggerShake]);
+    } catch (err) {
+      console.error(err);
+      alert("Attack transaction failed or rejected.");
+    }
+  }, [chaosCheck, triggerShake, publicKey, connection, sendTransaction]);
 
   // Join faction
-  const joinFaction = useCallback((factionId: number) => {
-    setWorld(prev => ({
+  const joinFaction = useCallback(async (factionId: number) => {
+    if (!publicKey) {
+      alert("Please connect your wallet first to join a faction!");
+      return;
+    }
+
+    try {
+      const tx = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: publicKey,
+          toPubkey: TREASURY_PUBKEY,
+          lamports: 1000,
+        })
+      );
+      
+      const signature = await sendTransaction(tx, connection);
+      console.log(`On-chain join transaction sent: ${signature}`);
+
+      setWorld(prev => ({
       ...prev,
       chaosLevel: Math.min(prev.chaosLevel + CHAOS_PER_JOIN, MAX_CHAOS_LEVEL),
       factions: prev.factions.map(f =>
@@ -305,7 +374,11 @@ export function useWorldState() {
         factionId,
       }, ...prev.events].slice(0, 50),
     }));
-  }, []);
+    } catch (err) {
+      console.error(err);
+      alert("Join transaction failed or rejected.");
+    }
+  }, [publicKey, connection, sendTransaction]);
 
   return {
     world,
