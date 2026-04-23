@@ -151,12 +151,12 @@ export default function LandingPage() {
             </div>
 
             <div className="elegant-text-wrapper" style={{ marginTop: '20px', marginBottom: '32px' }}>
-              <span className="elegant-line" style={{ letterSpacing: '0.05em' }}>EVERY</span>
-              <span className="elegant-line bold" style={{ fontSize: 'clamp(4rem, 8vw, 7.5rem)', letterSpacing: '-0.02em', marginTop: '-10px' }}>TRANSACTION</span>
-              <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px', marginTop: '10px' }}>
-                <span style={{ height: '1px', background: 'rgba(255,255,255,0.5)', width: '60px' }}></span>
-                <span style={{ fontStyle: 'italic', color: '#e2e8f0' }}>CHANGES</span> REALITY.
-                <span style={{ height: '1px', background: 'rgba(255,255,255,0.5)', width: '60px' }}></span>
+              <span className="elegant-line" style={{ letterSpacing: '0.2em' }}>EVERY</span>
+              <span className="elegant-line bold" style={{ fontSize: 'clamp(3.5rem, 7vw, 6.5rem)', marginTop: '-5px' }}>TRANSACTION</span>
+              <span className="elegant-line elegant-serif" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px', marginTop: '15px' }}>
+                <span style={{ height: '1px', background: 'rgba(255,255,255,0.4)', width: '80px' }}></span>
+                <span style={{ fontStyle: 'italic', color: '#e2e8f0', fontWeight: 400 }}>CHANGES</span> REALITY.
+                <span style={{ height: '1px', background: 'rgba(255,255,255,0.4)', width: '80px' }}></span>
               </span>
             </div>
 
