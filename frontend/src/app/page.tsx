@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 function useTyper(lines: string[], speed = 30) {
   const [text, setText] = useState('');
@@ -26,92 +26,35 @@ function useTyper(lines: string[], speed = 30) {
   return ok ? text : '';
 }
 
-const SpiderWeb = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+const WordByWord = ({ text }: { text: string }) => {
+  const words = text.split(" ");
+  
+  const container = {
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.05, delayChildren: 0.2 * i },
+    }),
+  };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let particles: {x: number, y: number, vx: number, vy: number}[] = [];
-    let animationFrame: number;
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-
-    const init = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      particles = [];
-      const numParticles = Math.floor((width * height) / 12000); // denser
-      for (let i = 0; i < numParticles; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: (Math.random() - 0.5) * 0.8
-        });
-      }
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.lineWidth = 0.8;
-      
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(34, 211, 238, 0.6)';
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 140) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(168, 85, 247, ${0.8 - dist / 140})`;
-            ctx.stroke();
-          }
-        }
-      }
-      animationFrame = requestAnimationFrame(draw);
-    };
-
-    init();
-    draw();
-
-    window.addEventListener('resize', init);
-    return () => {
-      window.removeEventListener('resize', init);
-      cancelAnimationFrame(animationFrame);
-    };
-  }, []);
+  const child = {
+    visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 12, stiffness: 100 } },
+    hidden: { opacity: 0, y: 10 },
+  };
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        pointerEvents: 'none',
-        zIndex: 1,
-      }} 
-    />
+    <motion.div
+      style={{ display: "inline-block", overflow: "hidden" }}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+    >
+      {words.map((word, index) => (
+        <motion.span variants={child} style={{ marginRight: "4px", display: "inline-block" }} key={index}>
+          {word}
+        </motion.span>
+      ))}
+    </motion.div>
   );
 };
 
@@ -130,12 +73,12 @@ export default function LandingPage() {
   ]);
 
   const steps = [
-    { n: '01', icon: '🔗', t: 'Connect Wallet', d: 'Link your Phantom or Solflare wallet to enter the map.' },
-    { n: '02', icon: '🏛️', t: 'Choose Faction', d: 'Crimson Order, Azure Legion, or Emerald Pact — pick your side.' },
-    { n: '03', icon: '💰', t: 'Trade Power', d: 'Every SOL traded converts to faction power. The chaos level rises.' },
-    { n: '04', icon: '🧨', t: 'Chaos Engine Fires', d: 'On-chain probability rolls trigger wars, betrayals, or airdrops.' },
-    { n: '05', icon: '⚔️', t: 'Conquer Territory', d: 'Attack hex zones on the world map. Your faction power vs. defense.' },
-    { n: '06', icon: '🌀', t: 'World Evolves', d: 'AI agents act, events cascade, territories flip — the world never sleeps.' },
+    { n: 'PHASE 01', t: 'Connect Wallet', d: 'Link your Phantom or Solflare wallet to enter the map. No complex onboarding.' },
+    { n: 'PHASE 02', t: 'Choose Faction', d: 'Crimson Order, Azure Legion, or Emerald Pact — pick your side and align your strategy.' },
+    { n: 'PHASE 03', t: 'Trade Power', d: 'Every SOL traded converts to faction power. The global chaos level rises with every transaction.' },
+    { n: 'PHASE 04', t: 'Chaos Engine Fires', d: 'On-chain probability rolls trigger wars, betrayals, or airdrops deterministically.' },
+    { n: 'PHASE 05', t: 'Conquer Territory', d: 'Attack hex zones on the world map. It is your faction power vs. their defense.' },
+    { n: 'PHASE 06', t: 'World Evolves', d: 'AI agents act, events cascade, territories flip — the world never sleeps. All entirely on-chain.' },
   ];
 
   const events = [
@@ -176,8 +119,6 @@ export default function LandingPage() {
         zIndex: 0
       }} />
 
-      <SpiderWeb />
-
       <div className="lp-content-layer" style={{ position: 'relative', zIndex: 5 }}>
         {/* NAV */}
         <nav className="lp-nav" style={{ background: 'rgba(7,8,15,0.4)', backdropFilter: 'blur(16px)' }}>
@@ -211,10 +152,9 @@ export default function LandingPage() {
               <span className="accent">Changes Reality.</span>
             </h1>
 
-            <p className="lp-hero-desc">
-              A living blockchain map where factions battle for territory, a chaos engine triggers
-              unpredictable events, and AI agents play alongside you — all on-chain, all on Solana.
-            </p>
+            <div className="lp-hero-desc">
+              <WordByWord text="A living blockchain map where factions battle for territory, a chaos engine triggers unpredictable events, and AI agents play alongside you — all on-chain, all on Solana." />
+            </div>
 
             <div className="lp-hero-btns">
               <Link href="/world" className="lp-cta-btn">Explore Map →</Link>
@@ -222,33 +162,45 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Terminal */}
-          <motion.div className="lp-terminal" {...fade(0.3)}>
-            <div className="lp-terminal-head">
-              <div className="lp-terminal-dot" style={{ background: '#ef4444' }} />
-              <div className="lp-terminal-dot" style={{ background: '#f59e0b' }} />
-              <div className="lp-terminal-dot" style={{ background: '#10b981' }} />
-              <span className="lp-terminal-title">solmap_engine — mainnet</span>
+          {/* Professional Terminal */}
+          <motion.div className="lp-terminal-pro" {...fade(0.3)}>
+            <div className="pro-header">
+              <div className="dots">
+                <div style={{ background: '#ef4444' }} />
+                <div style={{ background: '#f59e0b' }} />
+                <div style={{ background: '#10b981' }} />
+              </div>
+              <div className="title">engine.rs</div>
+              <div className="right-badge">Rust</div>
             </div>
-            <div className="lp-terminal-body" style={{ background: 'rgba(0,0,0,0.4)' }}>
-              {typed}<span className="lp-cursor" />
+            <div className="pro-body">
+              <div className="line-numbers">
+                {Array.from({length: 8}).map((_, i) => <span key={i}>{i+1}</span>)}
+              </div>
+              <div className="code-content">
+                {typed}<span className="lp-cursor" />
+              </div>
             </div>
           </motion.div>
         </section>
 
-        {/* HOW IT WORKS */}
+        {/* HOW IT WORKS (Vertical Timeline) */}
         <section className="lp-section" id="how-it-works">
-          <div className="lp-section-inner">
+          <div className="lp-section-inner" style={{ maxWidth: '800px' }}>
             <span className="lp-section-tag" style={{ color: '#a855f7' }}>Protocol</span>
-            <h2>How It Works</h2>
-            <p className="lp-section-sub">Six steps from wallet connect to map domination.</p>
-            <div className="lp-steps">
-              {steps.map(s => (
-                <div key={s.n} className="lp-step" style={{ background: 'rgba(13,15,26,0.6)', backdropFilter: 'blur(10px)' }}>
-                  <span className="lp-step-num">{s.n}</span>
-                  <div className="lp-step-icon">{s.icon}</div>
-                  <h4>{s.t}</h4>
-                  <p>{s.d}</p>
+            <h2>Workflow</h2>
+            <p className="lp-section-sub">Six phases from wallet connect to map domination.</p>
+            
+            <div className="lp-timeline">
+              <div className="lp-timeline-line"></div>
+              {steps.map((s, i) => (
+                <div key={s.n} className="lp-timeline-item">
+                  <div className="lp-timeline-dot"></div>
+                  <div className="lp-timeline-content">
+                    <span className="lp-phase">{s.n}</span>
+                    <h4>{s.t}</h4>
+                    <p>{s.d}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -355,3 +307,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
