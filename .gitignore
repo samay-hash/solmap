@@ -1,0 +1,17 @@
+node_modules
+.next
+.DS_Store
+*.log
+.env
+dist
+build
+.anchor
+target
+*.jpeg
+*.png
+*.jpg
+*.webp
+!frontend/public/*.jpeg
+!frontend/public/*.png
+!frontend/public/*.jpg
+!frontend/public/*.webp
