@@ -35,8 +35,7 @@ export default function WorldPage() {
       <header className="header">
         <Link href="/" style={{ textDecoration: 'none' }}>
           <div className="logo">
-            <span style={{ fontSize: '1.5rem' }}>🌀</span>
-            CHAOS WORLD
+            SOLMAP
           </div>
         </Link>
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
 
 /* ═══════════════════════════════════════════
    CHAOS WORLD — Design System
@@ -287,26 +287,6 @@ code, .mono {
   border-radius: 99px;
 }
 
-/* ═══ Wallet adapter overrides ═══ */
-.wallet-adapter-button {
-  font-family: 'Outfit', sans-serif !important;
-  background: linear-gradient(135deg, var(--neon-purple), #7c3aed) !important;
-  border-radius: var(--radius-md) !important;
-  font-weight: 600 !important;
-  transition: all 0.25s var(--ease-spring) !important;
-}
-
-.wallet-adapter-button:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.4) !important;
-}
-
-.wallet-adapter-modal-wrapper {
-  background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-default) !important;
-  border-radius: var(--radius-xl) !important;
-  font-family: 'Outfit', sans-serif !important;
-}
 
 /* ═══ Event Feed ═══ */
 .event-item {
@@ -402,15 +382,85 @@ code, .mono {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: none;
+  -webkit-text-fill-color: initial;
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* ═══ Landing Page — MWAREX-inspired ═══ */
+/* ═══ Wallet adapter overrides ═══ */
+.wallet-adapter-button {
+  font-family: 'JetBrains Mono', monospace !important;
+  background: rgba(13, 15, 26, 0.8) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+  font-size: 0.8rem !important;
+  height: 40px !important;
+  padding: 0 16px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  transition: all 0.3s ease !important;
+}
+
+.wallet-adapter-button:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(0) !important;
+  box-shadow: none !important;
+}
+
+/* Modal styling */
+.wallet-adapter-modal-wrapper {
+  background: rgba(10, 12, 20, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(148, 163, 184, 0.15) !important;
+  border-radius: 8px !important;
+  font-family: 'Outfit', sans-serif !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.8) !important;
+}
+
+.wallet-adapter-modal-title {
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  font-size: 1.1rem !important;
+  color: #fff !important;
+}
+
+.wallet-adapter-modal-button-close {
+  background: rgba(255,255,255,0.05) !important;
+  border-radius: 4px !important;
+}
+
+.wallet-adapter-modal-list-more {
+  color: var(--neon-cyan) !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button {
+  font-family: 'Outfit', sans-serif !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  justify-content: flex-start !important;
+  padding: 12px 20px !important;
+  height: auto !important;
+  margin-bottom: 4px !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button:hover {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(148,163,184,0.2) !important;
+}
 
 /* Navbar */
 .lp-nav {
@@ -598,12 +648,21 @@ code, .mono {
   letter-spacing: -0.03em;
 }
 .elegant-line {
-  font-family: 'Syncopate', sans-serif;
-  font-size: clamp(3rem, 6vw, 4.5rem);
-  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 300;
   display: block;
-  letter-spacing: 0.05em;
-  line-height: 1.1;
+}
+.elegant-line.bold {
+  font-weight: 800;
+  font-size: clamp(3rem, 6vw, 5.5rem) !important;
+  letter-spacing: -0.04em;
+}
+.elegant-serif {
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 .elegant-sub {
   font-size: 0.8rem;
