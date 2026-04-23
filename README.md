@@ -1,4 +1,4 @@
-# <p align="center">🌀 SOLMAP</p>
+# <p align="center"> SOLMAP</p>
 <p align="center">
   <b>A living blockchain reality where every transaction ripples through the world.</b><br>
   <i>Built for the Solana Renaissance Hackathon 2026</i>
