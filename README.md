@@ -1,71 +1,97 @@
-# 🌀 CHAOS WORLD
+# <p align="center">🌀 SOLMAP</p>
+<p align="center">
+  <b>A living blockchain reality where every transaction ripples through the world.</b><br>
+  <i>Built for the Solana Renaissance Hackathon 2026</i>
+</p>
 
-> **A living blockchain world where every transaction shapes reality — built on Solana**
+<p align="center">
+  <img src="https://img.shields.io/badge/Solana-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Solana" />
+  <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" />
+  <img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Anchor-3b82f6?style=for-the-badge&logo=anchor&logoColor=white" alt="Anchor" />
+</p>
 
-## 🧨 What is Chaos World?
+---
 
-Chaos World is a real-time, on-chain strategy game where:
-- **3 factions** compete for territory control
-- **Every transaction** (trade, attack, join) changes the world state
-- A **Chaos Engine** triggers unpredictable events (wars, betrayals, power surges)
-- **AI agents** play alongside humans, creating a truly living world
+## 📽️ The Vision
+**SOLMAP** is not just a game; it's a decentralized world simulation. It leverages Solana's sub-second finality to create a real-time strategy map where the global state is entirely on-chain. Factions don't just "play"—they evolve based on a deterministic **Chaos Engine** and autonomous **AI Bot Agents**.
 
-## 🏗️ Architecture
+> [!IMPORTANT]
+> **Every SOL traded** increases the global Chaos Level. High chaos triggers automated wars, betrayals, and power shifts. The world never sleeps.
 
+---
+
+## 🕹️ Core Mechanics
+
+| Action | Impact | Reality Shift |
+| :--- | :--- | :--- |
+| **Connect** | Identity | Anchor PDA initialization for your faction alignment |
+| **Trade** | Power | Converts SOL into faction power (burn/transfer) |
+| **Attack** | Territory | Hexagonal zone capture via power-vs-defense math |
+| **Chaos** | Events | Probability rolls trigger War, Betrayals, or Airdrops |
+
+---
+
+## 🏗️ Technical Architecture
+
+```mermaid
+graph TD
+    User((User Wallet)) -->|Connect| Frontend[Next.js Interface]
+    Frontend -->|Transaction| Solana[Solana On-Chain Program]
+    Solana -->|Event Emit| Backend[Node.js WS Server]
+    Backend -->|Broadcast| Frontend
+    AI[AI Bot Agents] -->|Auto-Trade/Attack| Solana
+    Backend -->|Monitor State| AI
 ```
-solhack/
-├── programs/        → Solana smart contracts (Anchor/Rust)
-├── backend/         → WebSocket server + AI bots (Node.js)
-└── frontend/        → Visual world interface (Next.js)
-```
+
+### 🛠️ The Stack
+*   **On-Chain:** Anchor / Rust (PDA-based state management, custom instruction set)
+*   **Real-time Engine:** Node.js + WebSockets (Sub-400ms event propagation)
+*   **Brain:** Gemini-powered AI Agents simulating faction behavior
+*   **Visuals:** Next.js + Framer Motion + Glassmorphism UI
+
+---
+
+## 🌪️ The Chaos Engine
+The heart of SOLMAP is a deterministic probability engine.
+
+*   **WAR (Chaos > 80):** The strongest faction is forced into an automated attack against the weakest.
+*   **BETRAYAL (Chaos > 50):** Internal sabotage cripples faction power — trust is a luxury.
+*   **AIRDROP (Deterministic Roll):** Random power surges reward factions that hold their ground.
+
+---
 
 ## ⚡ Quick Start
 
-### Frontend
+### 🌐 Frontend (Visual Hub)
 ```bash
-cd frontend
-npm install
-npm run dev
+cd frontend && npm install && npm run dev
 ```
 
-### Backend (AI Bots + WebSocket)
+### 🤖 Backend (AI & Events)
 ```bash
-cd backend
-npm install
-npm run dev
+cd backend && npm install && npm run dev
 ```
 
-### On-Chain (Solana/Anchor)
+### ⚓ On-Chain (Smart Contracts)
 ```bash
 cd programs
 anchor build
 anchor deploy --provider.cluster devnet
 ```
 
-## 🎮 How It Works
+---
 
-1. **Connect wallet** → Join a faction
-2. **Trade** → Buy power for your faction (chaos increases)
-3. **Attack territories** → Capture zones from other factions
-4. **Chaos events** → Wars, betrayals, and power surges trigger automatically
-5. **AI agents** → Bots trade and attack in the background
+## 🎨 Design Aesthetic
+SOLMAP uses a **Hacker-Cyberpunk** aesthetic:
+- **Glassmorphism** panels for real-time data feeds
+- **Animated Hex Map** representing territory control
+- **Dynamic Chaos Bar** that shakes the screen as instability rises
+- **Mono-typography** (JetBrains Mono) for a terminal-grade experience
 
-## 🧠 Chaos Engine
+---
 
-Every action has a chance to trigger a world event:
-- **WAR** (chaos > 80): Strongest faction auto-attacks weakest
-- **BETRAYAL** (chaos > 50): Internal sabotage reduces faction power
-- **AIRDROP** (random): Lucky faction gets a power boost
-
-## 🛠️ Tech Stack
-
-| Layer | Tech |
-|---|---|
-| On-Chain | Anchor (Rust) on Solana |
-| Frontend | Next.js + Framer Motion |
-| Backend | Express + WebSocket |
-| Wallet | @solana/wallet-adapter |
-
-## 📝 License
-
-MIT — Built for Solana Hackathon 🚀
+<p align="center">
+  Built with 💜 for the Solana Ecosystem.<br>
+  <b>SOLMAP © 2026</b>
+</p>
