@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 export default function WorldPage() {
   const { connected } = useWallet();
-  const { world, isShaking, executeTrade, attackTerritory, joinFaction } = useWorldState();
+  const { world, isShaking, executeTrade, attackTerritory, joinFaction, isDemoMode, setIsDemoMode } = useWorldState();
   const [playerFactionId, setPlayerFactionId] = useState(0);
 
   const handleJoinFaction = (factionId: number) => {
@@ -64,6 +64,23 @@ export default function WorldPage() {
               </span>
             </div>
           )}
+
+          <button
+            onClick={() => setIsDemoMode(!isDemoMode)}
+            style={{
+              background: isDemoMode ? 'rgba(0, 255, 128, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+              border: `1px solid ${isDemoMode ? '#00ff80' : 'rgba(255, 255, 255, 0.1)'}`,
+              color: isDemoMode ? '#00ff80' : 'var(--text-muted, #a0a0a0)',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            {isDemoMode ? '🟢 Demo Mode ON' : '⚪ Demo Mode'}
+          </button>
 
           <WalletMultiButton />
         </div>

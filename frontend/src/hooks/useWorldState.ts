@@ -75,6 +75,7 @@ export function useWorldState() {
   });
 
   const [isShaking, setIsShaking] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
 
   // WebSocket connection
@@ -168,24 +169,26 @@ export function useWorldState() {
 
   // Trade action
   const executeTrade = useCallback(async (factionId: number, amount: number) => {
-    if (!publicKey) {
-      alert("Please connect your wallet first to execute a trade!");
+    if (!isDemoMode && !publicKey) {
+      alert("Please connect your wallet first to execute a trade, or enable Demo Mode!");
       return;
     }
 
     try {
-      // Create a dummy transaction to make it "on-chain"
-      const tx = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: TREASURY_PUBKEY,
-          lamports: 1000, // Smallest amount
-        })
-      );
-      
-      const signature = await sendTransaction(tx, connection);
-      // Optional: await connection.confirmTransaction(signature, 'processed');
-      console.log(`On-chain transaction sent: ${signature}`);
+      if (!isDemoMode && publicKey) {
+        // Create a dummy transaction to make it "on-chain"
+        const tx = new Transaction().add(
+          SystemProgram.transfer({
+            fromPubkey: publicKey,
+            toPubkey: TREASURY_PUBKEY,
+            lamports: 1000, // Smallest amount
+          })
+        );
+        
+        const signature = await sendTransaction(tx, connection);
+        // Optional: await connection.confirmTransaction(signature, 'processed');
+        console.log(`On-chain transaction sent: ${signature}`);
+      }
 
       setWorld(prev => {
       const newChaos = Math.min(prev.chaosLevel + CHAOS_PER_TRADE, MAX_CHAOS_LEVEL);
@@ -243,26 +246,28 @@ export function useWorldState() {
       console.error(err);
       alert("Transaction failed or rejected by user.");
     }
-  }, [chaosCheck, publicKey, connection, sendTransaction]);
+  }, [chaosCheck, publicKey, connection, sendTransaction, isDemoMode]);
 
   // Attack territory
   const attackTerritory = useCallback(async (factionId: number, zoneId: number) => {
-    if (!publicKey) {
-      alert("Please connect your wallet first to attack!");
+    if (!isDemoMode && !publicKey) {
+      alert("Please connect your wallet first to attack, or enable Demo Mode!");
       return;
     }
 
     try {
-      const tx = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: TREASURY_PUBKEY,
-          lamports: 1000,
-        })
-      );
-      
-      const signature = await sendTransaction(tx, connection);
-      console.log(`On-chain attack transaction sent: ${signature}`);
+      if (!isDemoMode && publicKey) {
+        const tx = new Transaction().add(
+          SystemProgram.transfer({
+            fromPubkey: publicKey,
+            toPubkey: TREASURY_PUBKEY,
+            lamports: 1000,
+          })
+        );
+        
+        const signature = await sendTransaction(tx, connection);
+        console.log(`On-chain attack transaction sent: ${signature}`);
+      }
 
       setWorld(prev => {
       const territory = prev.territories.find(t => t.zoneId === zoneId);
@@ -339,26 +344,28 @@ export function useWorldState() {
       console.error(err);
       alert("Attack transaction failed or rejected.");
     }
-  }, [chaosCheck, triggerShake, publicKey, connection, sendTransaction]);
+  }, [chaosCheck, triggerShake, publicKey, connection, sendTransaction, isDemoMode]);
 
   // Join faction
   const joinFaction = useCallback(async (factionId: number) => {
-    if (!publicKey) {
-      alert("Please connect your wallet first to join a faction!");
+    if (!isDemoMode && !publicKey) {
+      alert("Please connect your wallet first to join a faction, or enable Demo Mode!");
       return;
     }
 
     try {
-      const tx = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: TREASURY_PUBKEY,
-          lamports: 1000,
-        })
-      );
-      
-      const signature = await sendTransaction(tx, connection);
-      console.log(`On-chain join transaction sent: ${signature}`);
+      if (!isDemoMode && publicKey) {
+        const tx = new Transaction().add(
+          SystemProgram.transfer({
+            fromPubkey: publicKey,
+            toPubkey: TREASURY_PUBKEY,
+            lamports: 1000,
+          })
+        );
+        
+        const signature = await sendTransaction(tx, connection);
+        console.log(`On-chain join transaction sent: ${signature}`);
+      }
 
       setWorld(prev => ({
       ...prev,
@@ -378,11 +385,13 @@ export function useWorldState() {
       console.error(err);
       alert("Join transaction failed or rejected.");
     }
-  }, [publicKey, connection, sendTransaction]);
+  }, [publicKey, connection, sendTransaction, isDemoMode]);
 
   return {
     world,
     isShaking,
+    isDemoMode,
+    setIsDemoMode,
     executeTrade,
     attackTerritory,
     joinFaction,
