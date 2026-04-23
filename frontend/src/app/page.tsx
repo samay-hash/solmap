@@ -58,7 +58,15 @@ const WordByWord = ({ text }: { text: string }) => {
   );
 };
 
-const fade = (d = 0) => ({ initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: d, ease: [0.22, 1, 0.36, 1] } });
+const fade = (d = 0) => ({ 
+  initial: { opacity: 0, y: 24 }, 
+  animate: { opacity: 1, y: 0 }, 
+  transition: { 
+    duration: 0.6, 
+    delay: d, 
+    ease: [0.22, 1, 0.36, 1] as [number, number, number, number] 
+  } 
+});
 
 export default function LandingPage() {
   const [archSpread, setArchSpread] = useState(false);
